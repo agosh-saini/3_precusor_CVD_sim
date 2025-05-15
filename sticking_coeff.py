@@ -1,8 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
-from matplotlib.patches import Patch, FancyBboxPatch
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.patches import Patch
+import time as t
+
+
 
 # Grid and Movement Setup
 nx, ny = 50, 50
@@ -11,15 +13,15 @@ grid = np.zeros(grid_size, dtype=int)  # 0: empty, 1: gas A, 2: gas B, 3: solid 
 moved = np.zeros(grid_size, dtype=bool)
 
 # Probabilities (sticking coefficients and partial pressures)
-probA = 0.05
-probB = 0.05
-probAB = 0.05
-probBA = 0.05
-probAA = 0.05
-probBB = 0.05
+probA = 0.10
+probB = 0.10
+probAB = 0.10
+probBA = 0.20
+probAA = 0.10
+probBB = 0.20
 
 # Simulation Setup
-n_steps = 750
+n_steps = 500
 max_idle_steps = 25
 influx_rate = 1
 A_ratio = 0.5
@@ -40,11 +42,14 @@ cbar.ax.set_yticklabels(['Empty', 'Gas A', 'Gas B', 'Solid A', 'Solid B'])
 
 # Main simulation loop
 for step in range(1, n_steps + 1):
-    if step % 500 == 0:
+    
+    '''
+    if step % 50 == 0:
         img.set_data(grid)
         ax.set_title(f'Step {step}')
         plt.draw()
         plt.pause(0.01)
+    '''
 
     new_grid = grid.copy()
 
@@ -109,7 +114,7 @@ print(f'Expecteed Ratio: {A_ratio/B_ratio}, Actual Ratio: {solid_A_count/solid_B
 
 # Create a colormap for visualization
 colors = ['white', 'lightblue', 'lightgreen', 'blue', 'green']
-cmap = LinearSegmentedColormap.from_list('custom_cmap', colors)
+cmap = mcolors.LinearSegmentedColormap.from_list('custom_cmap', colors)
 
 
 for i in range(nx):
@@ -129,24 +134,23 @@ legend_elements = [
     Patch(facecolor='green', edgecolor='black', label='Solid B')
 ]
 
-# Create a figure with more space on the right for the legend and textbox
-plt.figure(figsize=(12, 8))
+# Create a full screen figure
+fig = plt.figure(figsize=(20, 12))
+plt.get_current_fig_manager().full_screen_toggle()
 
 # Plot the main grid
 plt.imshow(grid, cmap=cmap, interpolation='nearest')
 
 # Add labels and title
-title_main = 'Film Distribution of Two Gas CVD Deposition'
-title_sticking = f"Sticking Coefficients: A-A: {probAA:.2f}, A-B: {probAB:.2f}, B-A: {probBA:.2f}, B-B: {probBB:.2f}"
-title_ratio = f"A/B Fraction: {solid_A_count/solid_B_count:.2f}"
+main_title = "Film Distribution of Two Gas CVD Deposition"
+subtitle = f"Sticking Coefficients: A-A: {probAA:.2f}, A-B: {probAB:.2f}, B-A: {probBA:.2f}, B-B: {probBB:.2f} | A/B Fraction: {solid_A_count/solid_B_count:.2f}"
 
-plt.suptitle(f"{title_main}", fontsize=14, fontname='Arial', fontweight='bold', y=0.95)
-plt.title(f"{title_sticking}\n"
-             f"{title_ratio}",
-             fontsize=10, fontname='Arial', pad=5)
+# Place main title and subtitle at the top of the figure
+fig.text(0.5, 0.97, main_title, fontsize=16, fontweight='bold', ha='center', va='top', fontname='Arial')
+fig.text(0.5, 0.93, subtitle, fontsize=10, fontweight='normal', ha='center', va='top', fontname='Arial')
 
-plt.xlabel('Width (Particles)', fontsize=12, fontname='Arial')
-plt.ylabel('Height (Particles)', fontsize=12, fontname='Arial')
+plt.xlabel('Width (Particles)', fontsize=10, fontname='Arial')
+plt.ylabel('Height (Particles)', fontsize=10, fontname='Arial')
 
 # Add textbox with sticking coefficients
 textstr = '\n'.join((
@@ -175,7 +179,8 @@ legend.get_frame().set_edgecolor('black')
 # Adjust layout to prevent label cutoff
 plt.subplots_adjust(right=0.85)  # Make room for the legend and textbox
 
-plt.show()  # Keep the final frame displayed
+# Save the figure
+plt.savefig(f'./figures/cvd_distribution_{t.time()}.png', bbox_inches='tight', dpi=300) 
 
 
 
