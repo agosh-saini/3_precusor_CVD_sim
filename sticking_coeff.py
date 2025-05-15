@@ -15,16 +15,16 @@ moved = np.zeros(grid_size, dtype=bool)
 # Probabilities (sticking coefficients and partial pressures)
 probA = 0.10
 probB = 0.10
-probAB = 0.10
-probBA = 0.20
-probAA = 0.10
-probBB = 0.20
+probAB = 0.05
+probBA = 0.10
+probAA = 0.05
+probBB = 0.10
 
 # Simulation Setup
 n_steps = 500
 max_idle_steps = 25
 influx_rate = 1
-A_ratio = 0.5
+A_ratio = 0.55
 B_ratio = 1 - A_ratio
 
 # Visualization setup
