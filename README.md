@@ -79,5 +79,5 @@ Key simulation parameters can be adjusted in `sticking_coeff.py`:
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ## Reference
-[1]: "Sticking coefficient." Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/wiki/Sticking_coefficient
+[1]: "Sticking coefficient." Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/wiki/Sticking_coefficient \
 [2]: "Sticking Probability." Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/wiki/Sticking_probability
