@@ -70,13 +70,16 @@ Key simulation parameters can be adjusted in `sticking_coeff.py`:
 │   ├── requirements.txt # dependencies
 │   ├── sticking_coeff.py # Main file to run
 │   ├── Archive/
-│   │   ├── ... # Matlab files (inital)
+│   │   ├── ... # v0 Matlab Files
 │   ├── figures/
 │   │   ├── ... # Saved figures
 ```
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Contributions
+This project was created by Agosh Saini. Tools such as Cursor were used during this project. 
 
 ## Reference
 [1]: "Sticking coefficient." Wikipedia, The Free Encyclopedia, https://en.wikipedia.org/wiki/Sticking_coefficient \
